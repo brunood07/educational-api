@@ -9,7 +9,8 @@
     "start": "node build/main.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "eslint:github-action": "eslint src/"
   },
   "keywords": [],
   "author": "",
