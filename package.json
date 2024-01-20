@@ -1,0 +1,35 @@
+{
+  "name": "educational-api",
+  "version": "1.0.0",
+  "description": "- The project consists on the api of a educational platform using nodejs and fastify.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsup src --out-dir build",
+    "start:dev": "tsx watch src/main.ts",
+    "start": "node build/server.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.56.0",
+    "prisma": "^5.8.1",
+    "tsup": "^8.0.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vite-tsconfig-paths": "^4.3.1",
+    "vitest": "^1.2.1"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.8.1",
+    "dotenv": "^16.3.2",
+    "fastify": "^4.25.2",
+    "zod": "^3.22.4"
+  }
+}
