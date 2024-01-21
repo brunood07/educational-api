@@ -9,3 +9,77 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+}
+
+model User {
+  id         String   @id @default(uuid())
+  first_name String   @db.VarChar(100)
+  last_name  String   @db.VarChar(200)
+  email      String   @unique
+  document   String   @unique
+  role       Role
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  notifications Notification[]
+  Class         Class[]
+
+  @@map("user")
+}
+
+model Class {
+  id          String   @id @default(uuid())
+  title       String   @db.VarChar(100)
+  description String   @db.VarChar(500)
+  url         String
+  slug        String
+  User        User?    @relation(fields: [author_id], references: [id])
+  author_id   String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("class")
+}
+
+model Notification {
+  id           String   @id @default(uuid())
+  recipient_id String
+  title        String
+  content      String   @db.VarChar(200)
+  created_at   DateTime @default(now())
+  User         User?    @relation(fields: [user_id], references: [id])
+  user_id      String?
+
+  @@map("notification")
+}
+
+model Exam {
+  id          String      @id @default(uuid())
+  author_id   String
+  exam_string String
+  limit_date  DateTime
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  ExamAnswers ExamAnswers @relation(fields: [answer_id], references: [id])
+  answer_id   String
+
+  @@map("exam")
+}
+
+model ExamAnswers {
+  id             String   @id @default(uuid())
+  exam_id        String
+  student_id     String
+  answers_string String
+  grade          String
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+  Exam           Exam[]
+
+  @@map("exam_answers")
+}
