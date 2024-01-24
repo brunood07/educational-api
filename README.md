@@ -12,7 +12,7 @@
 
 ## ER DIAGRAM
 
-![image of er diagram](image.png)
+![Er Diagram](er-diagram.png)
 
 ## Fluxogram of the project
 

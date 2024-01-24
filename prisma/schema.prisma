@@ -17,33 +17,70 @@ enum Role {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  first_name String   @db.VarChar(100)
-  last_name  String   @db.VarChar(200)
-  email      String   @unique
-  document   String   @unique
-  role       Role
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id           String   @id @default(uuid())
+  first_name   String   @db.VarChar(100)
+  last_name    String   @db.VarChar(200)
+  email        String   @unique
+  document     String   @unique
+  phone_number String
+  role         Role
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
 
-  notifications Notification[]
-  Class         Class[]
+  notifications  Notification[]
+  Class          Class[]
+  CourseProgress CourseProgress[]
+  Course         Course[]
 
   @@map("user")
 }
 
+model Course {
+  id            String   @id @default(uuid())
+  User          User?    @relation(fields: [instructor_id], references: [id])
+  instructor_id String
+  course_name   String   @db.VarChar(100)
+  description   String   @db.VarChar(1000)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  Classes        Class[]
+  CourseProgress CourseProgress[]
+  Exam           Exam[]
+
+  @@map("course")
+}
+
 model Class {
-  id          String   @id @default(uuid())
-  title       String   @db.VarChar(100)
-  description String   @db.VarChar(500)
-  url         String
-  slug        String
-  User        User?    @relation(fields: [author_id], references: [id])
-  author_id   String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  id             String           @id @default(uuid())
+  title          String           @db.VarChar(100)
+  description    String           @db.VarChar(500)
+  url            String
+  slug           String
+  User           User?            @relation(fields: [author_id], references: [id])
+  author_id      String
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+  CourseProgress CourseProgress[]
+  Course         Course?          @relation(fields: [courseId], references: [id])
+  courseId       String?
 
   @@map("class")
+}
+
+model CourseProgress {
+  id        String   @id @default(uuid())
+  user_id   String
+  class_id  String
+  slug      String
+  watchedAt DateTime @default(now())
+
+  User     User    @relation(fields: [user_id], references: [id])
+  Class    Class   @relation(fields: [class_id], references: [id])
+  Course   Course? @relation(fields: [courseId], references: [id])
+  courseId String?
+
+  @@map("course_progress")
 }
 
 model Notification {
@@ -67,6 +104,8 @@ model Exam {
   updated_at  DateTime    @updatedAt
   ExamAnswers ExamAnswers @relation(fields: [answer_id], references: [id])
   answer_id   String
+  Course      Course?     @relation(fields: [courseId], references: [id])
+  courseId    String?
 
   @@map("exam")
 }
