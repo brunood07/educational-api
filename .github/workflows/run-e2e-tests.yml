@@ -26,7 +26,7 @@ jobs:
           cache: 'npm'
 
       - run: yarn
-      - run: yarn prisma migrate dev
+      - run: yarn prisma migrate deploy
       - run: yarn test:e2e
 
         env:
