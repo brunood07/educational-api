@@ -26,8 +26,9 @@ jobs:
           cache: 'npm'
 
       - run: yarn
-
+      - run: yarn prisma migrate dev
       - run: yarn test:e2e
+
         env:
           PASSWORD_SALT: 10
           DATABASE_URL: "postgresql://admin:admin@localhost:5432/educational-db?schema=public"
