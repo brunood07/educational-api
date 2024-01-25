@@ -27,6 +27,9 @@ jobs:
        
       - run: yarn install --frozen-lockfile
       - run: yarn prisma migrate deploy
+        env:
+            PASSWORD_SALT: 10
+            DATABASE_URL: "postgresql://admin:admin@localhost:5432/educational-db?schema=public"
       - run: yarn test:e2e
         env:
             PASSWORD_SALT: 10
