@@ -29,5 +29,5 @@ jobs:
 
       - run: yarn test:e2e
         env:
-          JWT_SECRET: testing
+          PASSWORD_SALT: 10
           DATABASE_URL: "postgresql://admin:admin@localhost:5432/educational-db?schema=public"
