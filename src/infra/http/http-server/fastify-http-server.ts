@@ -10,7 +10,7 @@ export const enum HTTP_METHODS {
 }
 
 export class FastifyHttpServer implements HttpServer<RouteHandlerMethod> {
-  private app = Fastify();
+  public app = Fastify();
 
   public async on(method: HTTP_METHODS, url: string, handler: RouteHandlerMethod): Promise<void> {
     this.app[method](url, handler);

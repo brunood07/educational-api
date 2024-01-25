@@ -8,6 +8,9 @@
     "start:dev": "tsx watch src/main.ts",
     "start": "node build/main.js",
     "test": "vitest run",
+    "test:e2e": "vitest run --config ./vite.config.e2e.mts",
+    "test:e2e:watch": "vitest --config ./vite.config.e2e.mts",
+    "test:cov": "vitest run --coverage",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "lint": "eslint"
@@ -16,19 +19,27 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@swc/core": "^1.3.106",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.11.5",
+    "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
+    "@vitest/coverage-v8": "^1.2.1",
+    "@vitest/ui": "^1.2.1",
     "eslint": "7.0.0",
     "prisma": "^5.8.1",
+    "supertest": "^6.3.4",
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
+    "unplugin-swc": "^1.4.4",
     "vite-tsconfig-paths": "^4.3.1",
     "vitest": "^1.2.1"
   },
   "dependencies": {
     "@prisma/client": "^5.8.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.2",
     "fastify": "^4.25.2",
     "zod": "^3.22.4"

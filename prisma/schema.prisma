@@ -23,6 +23,7 @@ model User {
   email        String   @unique
   document     String   @unique
   phone_number String
+  password     String
   role         Role
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
