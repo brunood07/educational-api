@@ -13,7 +13,8 @@
     "test:cov": "vitest run --coverage",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
-    "lint": "eslint"
+    "lint": "eslint",
+    "start:render": "yarn prisma migrate deploy && tsx watch src/main.ts"
   },
   "keywords": [],
   "author": "",
