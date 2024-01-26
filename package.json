@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsup src --out-dir build",
     "start:dev": "tsx watch src/main.ts",
-    "start": "node build/main.js",
+    "start:build": "node build/main.js",
     "test": "vitest run",
     "test:e2e": "vitest run --config ./vite.config.e2e.mts",
     "test:e2e:watch": "vitest --config ./vite.config.e2e.mts",
@@ -14,7 +14,7 @@
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "lint": "eslint",
-    "start:render": "yarn prisma generate && yarn prisma migrate deploy && tsx watch src/main.ts"
+    "start": "yarn prisma generate && yarn prisma migrate deploy && tsx watch src/main.ts"
   },
   "keywords": [],
   "author": "",
@@ -39,6 +39,7 @@
     "vitest": "^1.2.1"
   },
   "dependencies": {
+    "@fastify/swagger": "^8.14.0",
     "@prisma/client": "^5.8.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.2",
