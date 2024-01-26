@@ -14,7 +14,7 @@
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "lint": "eslint",
-    "start:render": "yarn prisma migrate deploy && tsx watch src/main.ts"
+    "start:render": "yarn prisma generate && yarn prisma migrate deploy && tsx watch src/main.ts"
   },
   "keywords": [],
   "author": "",
