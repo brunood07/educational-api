@@ -30,8 +30,10 @@ jobs:
         env:
             PASSWORD_SALT: 10
             DATABASE_URL: "postgresql://admin:admin@localhost:5432/educational-db?schema=public"
+            CORS: -*-
       - run: yarn test:e2e
         env:
             PASSWORD_SALT: 10
             DATABASE_URL: "postgresql://admin:admin@localhost:5432/educational-db?schema=public"
+            CORS: -*-
         
