@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsup src --out-dir build",
     "start:dev": "tsx watch src/main.ts",
-    "start:build": "node build/main.js",
+    "start": "node build/main.js",
     "test": "vitest run",
     "test:e2e": "vitest run --config ./vite.config.e2e.mts",
     "test:e2e:watch": "vitest --config ./vite.config.e2e.mts",
@@ -14,7 +14,8 @@
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "lint": "eslint",
-    "start": "yarn prisma generate && yarn prisma migrate deploy && tsx watch src/main.ts"
+    "start:prisma": "yarn prisma generate && yarn prisma migrate deploy",
+    "start:render": "yarn start:prisma && yarn build && yarn start"
   },
   "keywords": [],
   "author": "",

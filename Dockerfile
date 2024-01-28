@@ -1,4 +1,4 @@
-FROM node:19-alpine
+FROM node:20.9.0-alpine
 
 WORKDIR /usr/app/
 COPY package.json ./
@@ -7,4 +7,4 @@ COPY . .
 
 EXPOSE 3333
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:render"]
