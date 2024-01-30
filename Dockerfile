@@ -1,8 +1,16 @@
-FROM node:20.9.0-alpine
+FROM node:20-alpine
 
-WORKDIR /usr/app/
-COPY package.json ./
-RUN npm install
-COPY . . 
+WORKDIR /usr/src/app
 
-CMD ["npm", "run", "start:render"]
+COPY package*.json .
+COPY prisma ./prisma
+
+RUN npm ci --quiet
+
+COPY . .
+
+RUN npm run build
+
+RUN npm ci --only=production --quiet
+
+CMD ["npm", "run", "start" ]
