@@ -3,14 +3,13 @@ FROM node:20-alpine
 WORKDIR /usr/src/app
 
 COPY package*.json .
+COPY yarn.lock .
 COPY prisma ./prisma
 
-RUN npm ci --quiet
+RUN yarn install --frozen-lockfile
 
 COPY . .
 
-RUN npm run build
-
-RUN npm ci --only=production --quiet
+RUN yarn build
 
 CMD ["npm", "run", "start" ]
