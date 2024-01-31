@@ -5,6 +5,7 @@ import { env } from './infra/env';
 import { FastifyHttpServer } from './infra/http/http-server/fastify-http-server';
 import { healthCheckRoutes } from './infra/http/routes/health-check-routes';
 import { studentRoutes } from './infra/http/routes/student-routes';
+import { instructorRoutes } from './infra/http/routes/instructor-routes';
 
 async function main() {
   const httpServer = new FastifyHttpServer()
@@ -29,6 +30,7 @@ async function main() {
     routePrefix: '/swagger-ui'
   })
   httpServer.register(studentRoutes)
+  httpServer.register(instructorRoutes)
   httpServer.register(healthCheckRoutes)
   httpServer.listen(env.PORT)
 }

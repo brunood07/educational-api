@@ -2,11 +2,11 @@ import request from "supertest"
 import { test, expect, describe } from "vitest"
 import { app } from "../../../../tests/setup-fastify-e2e"
 
-describe('register student (E2E)', () => {
-  test('[POST] /students', async () => {
-    const response = await request(app.server).post("/students").send({
-      document: "11111111111",
-      email: "student@email.com",
+describe('register instructor (E2E)', () => {
+  test('[POST] /instructors', async () => {
+    const response = await request(app.server).post("/instructors").send({
+      document: "11111111112",
+      email: "instructor@email.com",
       first_name: "John",
       last_name: "Doe",
       password: "Teste123",
