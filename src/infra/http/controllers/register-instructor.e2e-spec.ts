@@ -11,7 +11,7 @@ describe('register instructor (E2E)', () => {
       last_name: "Doe",
       password: "Teste123",
       phone_number: "11999999999"
-    })
+    }) 
 
     expect(response.status).toBe(201)
   })
