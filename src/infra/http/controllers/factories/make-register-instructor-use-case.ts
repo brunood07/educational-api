@@ -1,11 +1,11 @@
 import { RegisterInstructorUseCase } from "@/domain/educational/application/use-cases/register-instructor";
 import { BcryptHasher } from "@/infra/cryptograph/bcrypt-hasher";
-import { PrismaInstructorsRepository } from "@/infra/database/repositories/prisma/prisma-instructors-repository";
+import { PrismaUsersRepository } from "@/infra/database/repositories/prisma/prisma-users-repository";
 
 export function makeRegisterInstructorUseCase() {
-  const prismaInstructorsRepository = new PrismaInstructorsRepository();
+  const prismaUsersRepository = new PrismaUsersRepository();
   const hashGenerator = new BcryptHasher();
-  const registerInstructorUseCase = new RegisterInstructorUseCase(prismaInstructorsRepository, hashGenerator);
+  const registerInstructorUseCase = new RegisterInstructorUseCase(prismaUsersRepository, hashGenerator);
 
   return registerInstructorUseCase;
 }

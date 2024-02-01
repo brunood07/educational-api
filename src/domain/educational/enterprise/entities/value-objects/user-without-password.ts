@@ -1,6 +1,6 @@
 import { ValueObject } from "@/core/entities/value-object";
 
-export interface StudentWithoutPasswordProps {
+export interface UserWithoutPasswordProps {
   id: string;
   first_name: string;
   last_name: string;
@@ -11,7 +11,7 @@ export interface StudentWithoutPasswordProps {
   updated_at: Date;
 }
 
-export class StudentWithoutPassword extends ValueObject<StudentWithoutPasswordProps> {
+export class UserWithoutPassword extends ValueObject<UserWithoutPasswordProps> {
   get id() {
     return this.props.id;
   }
@@ -44,7 +44,7 @@ export class StudentWithoutPassword extends ValueObject<StudentWithoutPasswordPr
     return this.props.updated_at;
   }
 
-  static create(props: StudentWithoutPasswordProps) {
-    return new StudentWithoutPassword(props);
+  static create(props: UserWithoutPasswordProps) {
+    return new UserWithoutPassword(props);
   }
 }

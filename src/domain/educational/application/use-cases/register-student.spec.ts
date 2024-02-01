@@ -1,19 +1,19 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { InMemoryStudentsRepository } from "../../../../../tests/repositories/in-memory-students-repository";
+import { InMemoryUsersRepository } from "../../../../../tests/repositories/in-memory-users-repository";
 import { FakeHasher } from "../../../../../tests/cryptograph/fake-hasher";
 import { RegisterStudentUseCase } from "./register-student";
 import { EmailAlreadyRegisteredError } from "@/core/errors/email-already-registered";
 import { DocumentAlreadyRegisteredError } from "@/core/errors/document-already-registered";
 
-let inMemoryStudentsRepository: InMemoryStudentsRepository;
+let inMemoryUsersRepository: InMemoryUsersRepository;
 let fakeHasher: FakeHasher;
 let sut: RegisterStudentUseCase;
 
 describe("Register Student", () => {
   beforeEach(() => {
-    inMemoryStudentsRepository = new InMemoryStudentsRepository();
+    inMemoryUsersRepository = new InMemoryUsersRepository();
     fakeHasher = new FakeHasher();
-    sut = new RegisterStudentUseCase(inMemoryStudentsRepository, fakeHasher);
+    sut = new RegisterStudentUseCase(inMemoryUsersRepository, fakeHasher);
   })
 
   it("should be able to register students", async () => {
@@ -41,7 +41,7 @@ describe("Register Student", () => {
 
     const hashedPassword = await fakeHasher.hash('Teste123')
 
-    expect(inMemoryStudentsRepository.items[0].password).toBe(hashedPassword);
+    expect(inMemoryUsersRepository.items[0].password).toBe(hashedPassword);
   });
 
   it("should not be able to create student with an already registered email", async () => {

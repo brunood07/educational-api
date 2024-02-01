@@ -1,23 +1,23 @@
-import { StudentsRepository } from "@/domain/educational/application/repositories/students-repository";
+import { UsersRepository } from "@/domain/educational/application/repositories/users-repository";
 import { Student } from "@/domain/educational/enterprise/entities/student";
-import { StudentWithoutPassword } from "@/domain/educational/enterprise/entities/value-objects/student-without-password";
+import { UserWithoutPassword } from "@/domain/educational/enterprise/entities/value-objects/user-without-password";
 import { randomUUID } from "node:crypto";
 
-export class InMemoryStudentsRepository implements StudentsRepository {
+export class InMemoryUsersRepository implements UsersRepository {
   public items: Student[] = [];
 
   async create(data: Student): Promise<void> {
     this.items.push(data);
   }
 
-  async findByEmail(email: string): Promise<StudentWithoutPassword | null> {
+  async findByEmail(email: string): Promise<UserWithoutPassword | null> {
     const student = this.items.find(item => item.email === email);
 
     if (!student) {
       return null;
     }
 
-    return StudentWithoutPassword.create({
+    return UserWithoutPassword.create({
       id: randomUUID(),
       created_at: new Date(),
       document: student.document,
@@ -29,14 +29,14 @@ export class InMemoryStudentsRepository implements StudentsRepository {
     });
   }
 
-  async findByDocument(document: string): Promise<StudentWithoutPassword | null> {
+  async findByDocument(document: string): Promise<UserWithoutPassword | null> {
     const student = this.items.find(item => item.document === document);
 
     if (!student) {
       return null;
     }
 
-    return StudentWithoutPassword.create({
+    return UserWithoutPassword.create({
       id: randomUUID(),
       created_at: new Date(),
       document: student.document,

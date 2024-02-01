@@ -3,17 +3,17 @@ import { FakeHasher } from "../../../../../tests/cryptograph/fake-hasher";
 import { EmailAlreadyRegisteredError } from "@/core/errors/email-already-registered";
 import { DocumentAlreadyRegisteredError } from "@/core/errors/document-already-registered";
 import { RegisterInstructorUseCase } from "./register-instructor";
-import { InMemoryInstructorsRepository } from "../../../../../tests/repositories/in-memory-instructors-repository";
+import { InMemoryUsersRepository } from "../../../../../tests/repositories/in-memory-users-repository";
 
-let inMemoryInstructorsRepository: InMemoryInstructorsRepository;
+let inMemoryUsersRepository: InMemoryUsersRepository;
 let fakeHasher: FakeHasher;
 let sut: RegisterInstructorUseCase;
 
 describe("Register instructor", () => {
   beforeEach(() => {
-    inMemoryInstructorsRepository = new InMemoryInstructorsRepository();
+    inMemoryUsersRepository = new InMemoryUsersRepository();
     fakeHasher = new FakeHasher();
-    sut = new RegisterInstructorUseCase(inMemoryInstructorsRepository, fakeHasher);
+    sut = new RegisterInstructorUseCase(inMemoryUsersRepository, fakeHasher);
   })
 
   it("should be able to register instructor", async () => {
@@ -41,7 +41,7 @@ describe("Register instructor", () => {
 
     const hashedPassword = await fakeHasher.hash('Teste123')
 
-    expect(inMemoryInstructorsRepository.items[0].password).toBe(hashedPassword);
+    expect(inMemoryUsersRepository.items[0].password).toBe(hashedPassword);
   });
 
   it("should not be able to create instructor with an already registered email", async () => {
