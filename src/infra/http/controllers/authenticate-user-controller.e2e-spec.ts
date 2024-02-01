@@ -24,7 +24,7 @@ describe('authenticate user (E2E)', () => {
   test('[POST] /auth with invalid password', async () => {
     const response = await request(app.server).post("/auth").send({
       email: "instructor@email.com",
-      password: "Teste1234",
+      password: "Taeste1234",
     }) 
 
     expect(response.status).toBe(400)
