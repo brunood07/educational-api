@@ -8,6 +8,7 @@ import { studentRoutes } from './infra/http/routes/student-routes';
 import { instructorRoutes } from './infra/http/routes/instructor-routes';
 import fastifyJwt from '@fastify/jwt';
 import fastifyCookie from '@fastify/cookie';
+import { authRoutes } from './infra/http/routes/auth-routes';
 
 async function main() {
   const httpServer = new FastifyHttpServer()
@@ -53,6 +54,7 @@ async function main() {
   httpServer.register(fastifyCookie)
   httpServer.register(studentRoutes)
   httpServer.register(instructorRoutes)
+  httpServer.register(authRoutes)
   httpServer.register(healthCheckRoutes)
 
   httpServer.listen(env.PORT)
