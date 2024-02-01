@@ -31,9 +31,15 @@ jobs:
             PASSWORD_SALT: 10
             DATABASE_URL: "postgresql://admin:admin@localhost:5432/educational-db?schema=public"
             CORS: -*-
+            JWT_SECRET: teste123
+            JWT_TOKEN_EXPIRES_IN: 10m
+            JWT_REFRESH_TOKEN_EXPIRES_IN: 60m
       - run: yarn test:e2e
         env:
             PASSWORD_SALT: 10
             DATABASE_URL: "postgresql://admin:admin@localhost:5432/educational-db?schema=public"
             CORS: -*-
+            JWT_SECRET: teste123
+            JWT_TOKEN_EXPIRES_IN: 10m
+            JWT_REFRESH_TOKEN_EXPIRES_IN: 60m
         
