@@ -1,9 +1,9 @@
 import { Instructor } from "../../enterprise/entities/instructor";
 import { Student } from "../../enterprise/entities/student";
-import { UserWithoutPassword } from "../../enterprise/entities/value-objects/user-without-password";
+import { User } from "../../enterprise/entities/value-objects/user";
 
 export abstract class UsersRepository {
   abstract create(data: Student | Instructor): Promise<void>;
-  abstract findByEmail(email: string): Promise<UserWithoutPassword | null>;
-  abstract findByDocument(document: string): Promise<UserWithoutPassword | null>;
+  abstract findByEmail(email: string): Promise<User | null>;
+  abstract findByDocument(document: string): Promise<User | null>;
 }

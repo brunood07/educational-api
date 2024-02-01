@@ -1,17 +1,20 @@
 import { ValueObject } from "@/core/entities/value-object";
+import { Role } from "@prisma/client";
 
-export interface UserWithoutPasswordProps {
+export interface UserProps {
   id: string;
   first_name: string;
   last_name: string;
   email: string;
   document: string;
   phone_number: string;
+  role: Role;
+  password: string;
   created_at: Date;
   updated_at: Date;
 }
 
-export class UserWithoutPassword extends ValueObject<UserWithoutPasswordProps> {
+export class User extends ValueObject<UserProps> {
   get id() {
     return this.props.id;
   }
@@ -36,6 +39,14 @@ export class UserWithoutPassword extends ValueObject<UserWithoutPasswordProps> {
     return this.props.phone_number;
   }
 
+  get password() {
+    return this.props.password;
+  }
+  
+  get role() {
+    return this.props.role;
+  }
+
   get created_at() {
     return this.props.created_at;
   }
@@ -44,7 +55,7 @@ export class UserWithoutPassword extends ValueObject<UserWithoutPasswordProps> {
     return this.props.updated_at;
   }
 
-  static create(props: UserWithoutPasswordProps) {
-    return new UserWithoutPassword(props);
+  static create(props: UserProps) {
+    return new User(props);
   }
 }

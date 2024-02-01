@@ -1,6 +1,6 @@
 import { UsersRepository } from "@/domain/educational/application/repositories/users-repository";
 import { Student } from "@/domain/educational/enterprise/entities/student";
-import { UserWithoutPassword } from "@/domain/educational/enterprise/entities/value-objects/user-without-password";
+import { User } from "@/domain/educational/enterprise/entities/value-objects/user";
 import { prisma } from "@/infra/database/prisma";
 import { PrismaStudentMapper } from "../../mappers/prisma-student-mapper";
 import { Instructor } from "@/domain/educational/enterprise/entities/instructor";
@@ -13,7 +13,7 @@ export class PrismaUsersRepository implements UsersRepository {
     })
   }
 
-  async findByEmail(email: string): Promise<UserWithoutPassword | null> {
+  async findByEmail(email: string): Promise<User | null> {
     const user = await prisma.user.findUnique({
       where: {
         email
@@ -22,19 +22,21 @@ export class PrismaUsersRepository implements UsersRepository {
 
     if (!user) return null
 
-    return UserWithoutPassword.create({
+    return User.create({
       id: user.id,
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
       document: user.document,
       phone_number: user.phone_number,
+      password: user.password,
+      role: user.role,
       created_at: user.created_at,
       updated_at: user.updated_at
     });
   }
 
-  async findByDocument(document: string): Promise<UserWithoutPassword | null> {
+  async findByDocument(document: string): Promise<User | null> {
     const user = await prisma.user.findUnique({
       where: {
         document
@@ -43,7 +45,7 @@ export class PrismaUsersRepository implements UsersRepository {
 
     if (!user) return null
 
-    return UserWithoutPassword.create({
+    return User.create({
       id: user.id,
       created_at: user.created_at,
       document: user.document,
@@ -51,6 +53,8 @@ export class PrismaUsersRepository implements UsersRepository {
       first_name: user.first_name,
       last_name: user.last_name,
       phone_number: user.phone_number,
+      role: user.role,
+      password: user.password,
       updated_at: user.updated_at
     });
   }
