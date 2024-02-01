@@ -6,13 +6,19 @@ import { FastifyHttpServer } from './infra/http/http-server/fastify-http-server'
 import { healthCheckRoutes } from './infra/http/routes/health-check-routes';
 import { studentRoutes } from './infra/http/routes/student-routes';
 import { instructorRoutes } from './infra/http/routes/instructor-routes';
+import fastifyJwt from '@fastify/jwt';
+import fastifyCookie from '@fastify/cookie';
 
 async function main() {
   const httpServer = new FastifyHttpServer()
+  
+  // CORS CONFIGURATION
   httpServer.register(FastifyCors, {
     origin: env.CORS,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   })
+
+  // SWAGGER CONFIGURATION
   httpServer.register(FastifySwagger, {
     routePrefix: '/swagger-ui',
     swagger: {
@@ -23,15 +29,32 @@ async function main() {
       }
     }
   })
+
   httpServer.register(FastifySwaggerUI, {
     theme: {
       title: 'Educational API'
     },
     routePrefix: '/swagger-ui'
   })
+
+  // JWT CONFIGURATION
+  httpServer.register(fastifyJwt, {
+    secret: env.JWT_SECRET,
+    cookie: {
+      cookieName: 'refreshToken',
+      signed: false,
+    },
+    sign: {
+      expiresIn: env.JWT_TOKEN_EXPIRES_IN,
+    },
+  })
+
+  // ROUTERS
+  httpServer.register(fastifyCookie)
   httpServer.register(studentRoutes)
   httpServer.register(instructorRoutes)
   httpServer.register(healthCheckRoutes)
+
   httpServer.listen(env.PORT)
 }
 

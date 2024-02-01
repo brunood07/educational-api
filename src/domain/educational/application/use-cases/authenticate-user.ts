@@ -1,20 +1,28 @@
 import { InvalidCredentialsError } from "@/core/errors/invalid-credentials"
 import { UsersRepository } from "../repositories/users-repository"
 import { HashComparer } from "../cryptography/hash-comparer"
-import { Encrypter } from "../cryptography/encrypter"
+import { FastifyJwtSignOptions, SignPayloadType } from "@fastify/jwt"
+import { env } from "@/infra/env"
 
 interface AuthenticateUserUseCaseRequest {
   email: string
   password: string
 }
 
-interface AuthenticateUserUseCaseResponse {}
+interface TokenPayload {
+  options: SignPayloadType
+  payload: FastifyJwtSignOptions
+}
+
+interface AuthenticateUserUseCaseResponse {
+  accessToken: TokenPayload
+  refreshToken: TokenPayload
+}
 
 export class AuthenticateUserUseCase {
   constructor( 
       private usersRepository: UsersRepository,
-      private hashComparer: HashComparer,
-      private encrypter: Encrypter
+      private hashComparer: HashComparer
     ) {}
 
   execute = async (data: AuthenticateUserUseCaseRequest): Promise<AuthenticateUserUseCaseResponse> => {
@@ -25,10 +33,26 @@ export class AuthenticateUserUseCase {
     const passwordMatch = this.hashComparer.compare(password, user.password)
     if (!passwordMatch) throw new InvalidCredentialsError()
 
-    const accessToken = await this.encrypter.encrypt({
-      sub: `${user.email}-${user.role}`
-    })
-
-    return {}
+    return {
+      accessToken: {
+        options: {},
+        payload: {
+          sign: {
+            sub: `${user.id}-${user.role}`,
+            expiresIn: env.JWT_TOKEN_EXPIRES_IN,
+            
+          }
+        }
+      },
+      refreshToken: {
+        options: {},
+        payload: {
+          sign: {
+            sub: `${user.id}-${user.role}`,
+            expiresIn: env.JWT_REFRESH_TOKEN_EXPIRES_IN,
+          }
+        }
+      }
+    }
   }
 }
