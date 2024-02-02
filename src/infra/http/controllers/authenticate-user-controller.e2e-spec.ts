@@ -13,7 +13,7 @@ describe('authenticate user (E2E)', () => {
       phone_number: "11999999999"
     }) 
   })
-  
+
   test('[POST] /auth', async () => {
     const response = await request(app.server).post("/auth").send({
       email: "instructor@email.com",
@@ -35,7 +35,7 @@ describe('authenticate user (E2E)', () => {
   test('[POST] /auth with invalid password', async () => {
     const response = await request(app.server).post("/auth").send({
       email: "instructor@email.com",
-      password: "Taeste1234",
+      password: "wrongpassword",
     }) 
 
     expect(response.status).toBe(400)
