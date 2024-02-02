@@ -23,7 +23,7 @@ export class AuthenticateUserController {
         secure: true,
         sameSite: true,
         httpOnly: true
-      }).send({ token })
+      }).send(token)
     } catch (err) {
       if (err instanceof InvalidCredentialsError) {
         reply.status(400).send(err.message)

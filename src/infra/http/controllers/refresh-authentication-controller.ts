@@ -1,16 +1,16 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 export class RefreshAuthenticationController {
-  handle = async (request: FastifyRequest, reply: FastifyReply) => {
-    await request.jwtVerify({ onlyCookie: true })
-
-    const { role } = request.user
+  handle = async (req: FastifyRequest, reply: FastifyReply) => {
+    await req.jwtVerify({ onlyCookie: true })
+    
+    const { role } = req.user
 
     const token = await reply.jwtSign(
       { role },
       {
         sign: {
-          sub: request.user.sub,
+          sub: req.user.sub,
         },
       },
     )
@@ -19,7 +19,7 @@ export class RefreshAuthenticationController {
       { role },
       {
         sign: {
-          sub: request.user.sub,
+          sub: req.user.sub,
           expiresIn: '7d',
         },
       },
@@ -33,6 +33,6 @@ export class RefreshAuthenticationController {
         sameSite: true,
         httpOnly: true,
       })
-      .send({ token })
+      .send(token)
   }
 }
