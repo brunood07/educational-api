@@ -16,9 +16,9 @@ export class FastifyHttpServer implements HttpServer<RouteHandlerMethod> {
     this.app[method](url, handler);
   }
 
-  public async listen(port: number): Promise<void> {
+  public async listen(port: number, host: string): Promise<void> {
     try {
-      await this.app.listen({ port });
+      await this.app.listen({ port, host });
       console.log(`Server is listening on ${port} 🚀🚀`)
     } catch (error) {
       console.error(error);

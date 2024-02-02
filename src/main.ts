@@ -12,7 +12,6 @@ import { authRoutes } from './infra/http/routes/auth-routes';
 
 async function main() {
   const httpServer = new FastifyHttpServer()
-  console.log("🚀 ~ main ~ httpServer:", env.NODE_ENV)
   
   // CORS CONFIGURATION
   httpServer.register(FastifyCors, {
@@ -58,7 +57,11 @@ async function main() {
   httpServer.register(authRoutes)
   httpServer.register(healthCheckRoutes)
 
-  httpServer.listen(env.PORT)
+  if (env.NODE_ENV === 'production') {
+    httpServer.listen(env.PORT, '0.0.0.0')
+  } else {
+    httpServer.listen(env.PORT, '127.0.0.1')
+  }
 }
 
 main()
