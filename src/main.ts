@@ -4,11 +4,10 @@ import FastifySwaggerUI from '@fastify/swagger-ui';
 import { env } from './infra/env';
 import { FastifyHttpServer } from './infra/http/http-server/fastify-http-server';
 import { healthCheckRoutes } from './infra/http/routes/health-check-routes';
-import { studentRoutes } from './infra/http/routes/student-routes';
-import { instructorRoutes } from './infra/http/routes/instructor-routes';
 import fastifyJwt from '@fastify/jwt';
 import fastifyCookie from '@fastify/cookie';
 import { authRoutes } from './infra/http/routes/auth-routes';
+import { usersRoutes } from './infra/http/routes/users-routes';
 
 async function main() {
   const httpServer = new FastifyHttpServer()
@@ -52,8 +51,7 @@ async function main() {
 
   // ROUTERS
   httpServer.register(fastifyCookie)
-  httpServer.register(studentRoutes)
-  httpServer.register(instructorRoutes)
+  httpServer.register(usersRoutes)
   httpServer.register(authRoutes)
   httpServer.register(healthCheckRoutes)
 

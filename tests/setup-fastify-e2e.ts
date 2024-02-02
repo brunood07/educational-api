@@ -1,7 +1,6 @@
 import { FastifyHttpServer } from "@/infra/http/http-server/fastify-http-server";
 import { authRoutes } from "@/infra/http/routes/auth-routes";
-import { instructorRoutes } from "@/infra/http/routes/instructor-routes";
-import { studentRoutes } from "@/infra/http/routes/student-routes";
+import { usersRoutes } from "@/infra/http/routes/users-routes";
 import fastifyJwt from "@fastify/jwt";
 import { FastifyInstance } from "fastify";
 import { env } from "process";
@@ -21,8 +20,7 @@ export function setupFastify() {
       expiresIn: env.JWT_TOKEN_EXPIRES_IN,
     },
   })
-  app.register(studentRoutes);
-  app.register(instructorRoutes)
+  app.register(usersRoutes);
   app.register(authRoutes)
 }
 

@@ -35,20 +35,24 @@ export class AuthenticateUserUseCase {
 
     return {
       accessToken: {
-        options: {},
+        options: {
+          role: user.role
+        },
         payload: {
           sign: {
-            sub: `${user.id}-${user.role}`,
+            sub: user.id,
             expiresIn: env.JWT_TOKEN_EXPIRES_IN,
             
           }
         }
       },
       refreshToken: {
-        options: {},
+        options: {
+          role: user.role
+        },
         payload: {
           sign: {
-            sub: `${user.id}-${user.role}`,
+            sub: user.id,
             expiresIn: env.JWT_REFRESH_TOKEN_EXPIRES_IN,
           }
         }

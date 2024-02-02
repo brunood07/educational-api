@@ -25,7 +25,7 @@ describe('Authenticate User', () => {
       password: 'teste123'
     })
 
-    expect(token.accessToken.payload.sign?.sub).toContain("-STUDENT")
+    expect(token.accessToken.payload.sign?.sub).toEqual(expect.any(String))
   })
 
   it('should not be able ot authenticate a user with invalid email', async () => {
