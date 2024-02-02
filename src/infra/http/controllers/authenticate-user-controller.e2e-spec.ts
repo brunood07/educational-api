@@ -8,6 +8,8 @@ describe('authenticate user (E2E)', () => {
       email: "instructor@email.com",
       password: "Teste123",
     }) 
+    console.log("🚀 ~ response ~ response:", response.body)
+    
 
     expect(response.status).toBe(200)
   })
