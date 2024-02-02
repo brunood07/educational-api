@@ -12,6 +12,7 @@ import { authRoutes } from './infra/http/routes/auth-routes';
 
 async function main() {
   const httpServer = new FastifyHttpServer()
+  console.log("🚀 ~ main ~ httpServer:", env.NODE_ENV)
   
   // CORS CONFIGURATION
   httpServer.register(FastifyCors, {
