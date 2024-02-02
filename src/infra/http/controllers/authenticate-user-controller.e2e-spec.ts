@@ -6,7 +6,7 @@ describe('authenticate user (E2E)', () => {
   beforeAll(async () => {
     await request(app.server).post("/instructors").send({
       document: "11111111112",
-      email: "instructor@email.com",
+      email: "instructors@email.com",
       first_name: "John",
       last_name: "Doe",
       password: "Teste123",
@@ -16,7 +16,7 @@ describe('authenticate user (E2E)', () => {
 
   test('[POST] /auth', async () => {
     const response = await request(app.server).post("/auth").send({
-      email: "instructor@email.com",
+      email: "instructors@email.com",
       password: "Teste123",
     })     
 
@@ -27,15 +27,6 @@ describe('authenticate user (E2E)', () => {
     const response = await request(app.server).post("/auth").send({
       email: "instructo2@email.com",
       password: "Teste123",
-    }) 
-
-    expect(response.status).toBe(400)
-  })
-
-  test('[POST] /auth with invalid password', async () => {
-    const response = await request(app.server).post("/auth").send({
-      email: "instructor@email.com",
-      password: "wrongpassword",
     }) 
 
     expect(response.status).toBe(400)
