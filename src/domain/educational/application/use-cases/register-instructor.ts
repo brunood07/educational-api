@@ -2,8 +2,8 @@ import { EmailAlreadyRegisteredError } from "@/core/errors/email-already-registe
 import { DocumentAlreadyRegisteredError } from "@/core/errors/document-already-registered";
 import { HasherGenerator } from "../cryptography/hash-generator";
 import { Role } from "@prisma/client";
-import { InstructorsRepository } from "../repositories/instructors-repository";
 import { Instructor } from "../../enterprise/entities/instructor";
+import { UsersRepository } from "../repositories/users-repository";
 
 interface RegisterInstructorUseCaseRequest {
   first_name: string;
@@ -19,14 +19,14 @@ interface RegisterInstructorUseCaseResponse {
 }
 
 export class RegisterInstructorUseCase {
-  constructor(private instructorsRepository: InstructorsRepository, private hashGenerator: HasherGenerator) {}
+  constructor(private usersRepository: UsersRepository, private hashGenerator: HasherGenerator) {}
 
   execute = async (data: RegisterInstructorUseCaseRequest): Promise<RegisterInstructorUseCaseResponse> => {
     const { document, email, first_name, last_name, phone_number, password } = data;
 
-    const emailAlreadyRegistered = await this.instructorsRepository.findByEmail(email);
+    const emailAlreadyRegistered = await this.usersRepository.findByEmail(email);
     if (emailAlreadyRegistered) throw new EmailAlreadyRegisteredError()
-    const documentAlreadyRegistered = await this.instructorsRepository.findByDocument(document);
+    const documentAlreadyRegistered = await this.usersRepository.findByDocument(document);
     if (documentAlreadyRegistered) throw new DocumentAlreadyRegisteredError();
 
     const passwordHash = await this.hashGenerator.hash(password);
@@ -41,7 +41,7 @@ export class RegisterInstructorUseCase {
       role: Role.INSTRUCTOR
     });
 
-    await this.instructorsRepository.create(instructor);
+    await this.usersRepository.create(instructor);
 
     return { instructor };
   }

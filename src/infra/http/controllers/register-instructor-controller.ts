@@ -7,7 +7,7 @@ import { makeRegisterInstructorUseCase } from "./factories/make-register-instruc
 const registerInstructorBodySchema = z.object({
   first_name: z.string(),
   last_name: z.string(),
-  email: z.string(),
+  email: z.string().email(),
   document: z.string(),
   phone_number: z.string(),
   password: z.string()
@@ -23,7 +23,6 @@ export class RegisterInstructorController {
 
       return reply.status(201).send();
     } catch (err) {
-      console.log(err)
       if (err instanceof EmailAlreadyRegisteredError || err instanceof DocumentAlreadyRegisteredError) {
         reply.status(400).send(err.message)
       }
