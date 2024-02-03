@@ -1,6 +1,7 @@
 import FastifyCors from '@fastify/cors';
 import FastifySwagger from '@fastify/swagger'
 import FastifySwaggerUI from '@fastify/swagger-ui';
+import redis from '@fastify/redis';
 import { env } from './infra/env';
 import { FastifyHttpServer } from './infra/http/http-server/fastify-http-server';
 import { healthCheckRoutes } from './infra/http/routes/health-check-routes';
@@ -11,11 +12,19 @@ import { usersRoutes } from './infra/http/routes/users-routes';
 
 async function main() {
   const httpServer = new FastifyHttpServer()
-  
+
   // CORS CONFIGURATION
   httpServer.register(FastifyCors, {
     origin: env.CORS,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  })
+
+  // REDIS
+  httpServer.register(redis, {
+    host: env.REDIS_HOST,
+    password: env.REDIS_PASSWORD,
+    port: env.REDIS_PORT,
+    family: 4
   })
 
   // SWAGGER CONFIGURATION
@@ -58,7 +67,7 @@ async function main() {
   if (env.NODE_ENV === 'production') {
     httpServer.listen(env.PORT, '0.0.0.0')
   } else {
-    httpServer.listen(env.PORT, '127.0.0.1')
+    httpServer.listen(env.PORT, 'localhost')
   }
 }
 

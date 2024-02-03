@@ -15,6 +15,7 @@ services:
       - postgres
     depends_on:
       - postgres
+      - cache
   postgres:
     image: bitnami/postgresql
     ports: 
@@ -23,3 +24,15 @@ services:
       - POSTGRESQL_USERNAME=admin
       - POSTGRESQL_PASSWORD=admin
       - POSTGRESQL_DATABASE=educational-db
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass redispass
+    volumes: 
+      - cache:/data
+
+volumes:
+  cache:
+    driver: local

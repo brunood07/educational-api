@@ -8,7 +8,10 @@ const envSchema = z.object({
   CORS: z.string(),
   JWT_SECRET: z.string(),
   JWT_TOKEN_EXPIRES_IN: z.string(),
-  JWT_REFRESH_TOKEN_EXPIRES_IN: z.string()
+  JWT_REFRESH_TOKEN_EXPIRES_IN: z.string(),
+  REDIS_HOST: z.string(),
+  REDIS_PORT: z.string(),
+  REDIS_PASSWORD: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)
