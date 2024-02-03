@@ -5,10 +5,32 @@ import { User } from "@/domain/educational/enterprise/entities/value-objects/use
 import { randomUUID } from "node:crypto";
 
 export class InMemoryUsersRepository implements UsersRepository {
-  public items: Student[] = [];
+  public items: User[] = [];
 
   async create(data: Student | Instructor): Promise<void> {
-    this.items.push(data);
+    const userData = {
+      id: randomUUID(),
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: data.email,
+      phone_number: data.phone_number,
+      role: data.role,
+      document: data.document,
+      password: data.password,
+      created_at: new Date(),
+      updated_at: new Date()
+    }
+
+    this.items.push(User.create(
+      userData
+    ));
+  }
+
+  async findById(id: string): Promise<User | null> {
+    const user = this.items.find(item => item.id === id)
+    if (!user) return null
+    
+    return user;
   }
 
   async findByEmail(email: string): Promise<User | null> {

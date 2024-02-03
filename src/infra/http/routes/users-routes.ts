@@ -1,10 +1,13 @@
 import { FastifyInstance } from "fastify";
 import { RegisterInstructorController } from "../controllers/register-instructor-controller";
 import { RegisterStudentController } from "../controllers/register-student-controller";
+import { GetProfileByIdController } from "../controllers/get-profile-by-id-controller";
+import { verifyJWT } from "./middlewares/verify-jwt";
 
 export async function usersRoutes(app: FastifyInstance) {
   const registerInstructor = new RegisterInstructorController();
   const registerStudent = new RegisterStudentController();
+  const getProfile = new GetProfileByIdController();
 
   app.post('/instructors', {
     schema: {
@@ -62,4 +65,5 @@ export async function usersRoutes(app: FastifyInstance) {
       },
     }
   }, registerStudent.handle);
+  app.get('/me', { onRequest: [verifyJWT] }, getProfile.handle);
 }

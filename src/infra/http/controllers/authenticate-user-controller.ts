@@ -15,8 +15,8 @@ export class AuthenticateUserController {
     try {
       const authenticateUser = makeAuthenticateUserUseCase()
       const payload = await authenticateUser.execute(data);
-      const token = await reply.jwtSign(payload.accessToken)
-      const refreshToken = await reply.jwtSign(payload.refreshToken)
+      const token = await reply.jwtSign(payload.accessToken.options, payload.accessToken.payload)
+      const refreshToken = await reply.jwtSign(payload.refreshToken.options, payload.refreshToken.payload)
 
       return reply.status(200).setCookie('refreshToken', refreshToken, {
         path: '/',

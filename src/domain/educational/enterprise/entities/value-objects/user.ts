@@ -9,7 +9,7 @@ export interface UserProps {
   document: string;
   phone_number: string;
   role: Role;
-  password: string;
+  password?: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -53,6 +53,10 @@ export class User extends ValueObject<UserProps> {
 
   get updated_at() {
     return this.props.updated_at;
+  }
+
+  clear_password() {
+    delete this.props.password
   }
 
   static create(props: UserProps) {
