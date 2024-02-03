@@ -21,3 +21,6 @@ jobs:
           JWT_SECRET: teste123
           JWT_TOKEN_EXPIRES_IN: 10m
           JWT_REFRESH_TOKEN_EXPIRES_IN: 60m
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          REDIS_PASSWORD: redispass
