@@ -2,11 +2,12 @@ import FastifyCors from '@fastify/cors';
 import FastifySwagger from '@fastify/swagger'
 import FastifySwaggerUI from '@fastify/swagger-ui';
 import redis from '@fastify/redis';
+import fastifyJwt from '@fastify/jwt';
+import fastifyCookie from '@fastify/cookie';
+import fastifyRateLimit from '@fastify/rate-limit';
 import { env } from './infra/env';
 import { FastifyHttpServer } from './infra/http/http-server/fastify-http-server';
 import { healthCheckRoutes } from './infra/http/routes/health-check-routes';
-import fastifyJwt from '@fastify/jwt';
-import fastifyCookie from '@fastify/cookie';
 import { authRoutes } from './infra/http/routes/auth-routes';
 import { usersRoutes } from './infra/http/routes/users-routes';
 
@@ -17,6 +18,12 @@ async function main() {
   httpServer.register(FastifyCors, {
     origin: env.CORS,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  })
+
+  // RATE LIMITER
+  httpServer.register(fastifyRateLimit, {
+    max: 100,
+    timeWindow: '1 minute'
   })
 
   // REDIS
