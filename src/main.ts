@@ -14,10 +14,11 @@ import { usersRoutes } from './infra/http/routes/users-routes';
 async function main() {
   const httpServer = new FastifyHttpServer()
 
+  console.log(env.CORS)
   // CORS CONFIGURATION
   httpServer.register(FastifyCors, {
     origin: env.CORS,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   })
 
   // RATE LIMITER
