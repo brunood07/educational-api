@@ -12,7 +12,7 @@ export async function usersRoutes(app: FastifyInstance) {
   app.post('/instructors', {
     schema: {
       description: 'CREATE INSTRUCTOR',
-      tags: ['Instructors'],
+      tags: ['Users'],
       summary: 'create instructor endpoint',
       body: {
         type: 'object',
@@ -40,7 +40,7 @@ export async function usersRoutes(app: FastifyInstance) {
   app.post('/students', {
     schema: {
       description: 'CREATE STUDENT',
-      tags: ['Students'],
+      tags: ['Users'],
       summary: 'create student endpoint',
       body: {
         type: 'object',
@@ -65,5 +65,32 @@ export async function usersRoutes(app: FastifyInstance) {
       },
     }
   }, registerStudent.handle);
-  app.get('/me', { onRequest: [verifyJWT] }, getProfile.handle);
+  app.get('/me', {
+    onRequest: [verifyJWT],
+    schema: {
+      description: 'Get Profile',
+      tags: ['Users'],
+      summary: 'Get user profile',
+      response: {
+        200: {
+          description: 'Successful response',
+          type: 'object',
+          properties: {
+            first_name: { type: 'string' },
+            last_name: { type: 'string' },
+            email: { type: 'string' },
+            document: { type: 'string' },
+            phone_number: { type: 'string' },
+            password: { type: 'string' },
+            created_at: { type: 'string' },
+            updated_at: { type: 'string' }
+          }
+        },
+        400: {
+          description: 'User not found',
+          type: 'string',
+        }
+      },
+    }
+  }, getProfile.handle);
 }

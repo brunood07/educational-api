@@ -1,5 +1,6 @@
 import { FastifyHttpServer } from "@/infra/http/http-server/fastify-http-server";
 import { authRoutes } from "@/infra/http/routes/auth-routes";
+import { coursesRoutes } from "@/infra/http/routes/courses-routes";
 import { usersRoutes } from "@/infra/http/routes/users-routes";
 import fastifyJwt from "@fastify/jwt";
 import { FastifyInstance } from "fastify";
@@ -21,7 +22,8 @@ export function setupFastify() {
     },
   })
   app.register(usersRoutes);
-  app.register(authRoutes)
+  app.register(authRoutes);
+  app.register(coursesRoutes);
 }
 
 export { app };
