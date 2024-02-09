@@ -6,7 +6,7 @@ describe('register student (E2E)', () => {
   test('[POST] /students', async () => {
     await request(app.server).post("/instructors").send({
       document: "11111111112",
-      email: "instructor@email.com",
+      email: "instructor123@email.com",
       first_name: "John",
       last_name: "Doe",
       password: "Teste123",
@@ -14,7 +14,7 @@ describe('register student (E2E)', () => {
     })
 
     const authentication = await request(app.server).post("/sessions").send({
-      email: "instructor@email.com",
+      email: "instructor123@email.com",
       password: "Teste123",
     })
 
