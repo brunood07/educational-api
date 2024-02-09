@@ -4,7 +4,7 @@ import { app } from "../../../../tests/setup-fastify-e2e"
 
 describe('register student (E2E)', () => {
   test('[POST] /students', async () => {
-    const user = await request(app.server).post("/instructors").send({
+    await request(app.server).post("/instructors").send({
       document: "11111111112",
       email: "instructor@email.com",
       first_name: "John",
@@ -18,7 +18,7 @@ describe('register student (E2E)', () => {
       password: "Teste123",
     })
 
-    const response = await request(app.server).post("/courses").send({
+    const response = await request(app.server).set("Authorization", `Bearer ${authentication.body.token}`).post("/courses").send({
       course_name: "course 1",
       instructor_id: "instructor-1",
       description: "description"
