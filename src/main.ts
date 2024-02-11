@@ -1,7 +1,6 @@
 import FastifyCors from '@fastify/cors';
 import FastifySwagger from '@fastify/swagger'
 import FastifySwaggerUI from '@fastify/swagger-ui';
-import redis from '@fastify/redis';
 import fastifyJwt from '@fastify/jwt';
 import fastifyCookie from '@fastify/cookie';
 import fastifyRateLimit from '@fastify/rate-limit';
@@ -10,11 +9,11 @@ import { FastifyHttpServer } from './infra/http/http-server/fastify-http-server'
 import { healthCheckRoutes } from './infra/http/routes/health-check-routes';
 import { authRoutes } from './infra/http/routes/auth-routes';
 import { usersRoutes } from './infra/http/routes/users-routes';
+import { coursesRoutes } from './infra/http/routes/courses-routes';
 
 async function main() {
   const httpServer = new FastifyHttpServer()
 
-  console.log(env.CORS)
   // CORS CONFIGURATION
   httpServer.register(FastifyCors, {
     origin: env.CORS,
@@ -70,6 +69,7 @@ async function main() {
   httpServer.register(fastifyCookie)
   httpServer.register(usersRoutes)
   httpServer.register(authRoutes)
+  httpServer.register(coursesRoutes)
   httpServer.register(healthCheckRoutes)
 
   if (env.NODE_ENV === 'production') {

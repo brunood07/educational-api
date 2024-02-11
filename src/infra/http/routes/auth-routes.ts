@@ -9,7 +9,7 @@ export async function authRoutes(app: FastifyInstance) {
   app.post('/sessions', {
     schema: {
       description: 'SESSION',
-      tags: ['SESSION'],
+      tags: ['Session'],
       summary: 'create token endpoint',
       body: {
         type: 'object',
@@ -33,7 +33,7 @@ export async function authRoutes(app: FastifyInstance) {
   app.patch('/sessions/refresh', {
     schema: {
       description: 'REFRESH SESSION',
-      tags: ['SESSION'],
+      tags: ['Session'],
       summary: 'refresh token endpoint',
       response: {
         200: {
