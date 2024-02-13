@@ -42,7 +42,7 @@ export class User extends ValueObject<UserProps> {
   get password() {
     return this.props.password;
   }
-  
+
   get role() {
     return this.props.role;
   }
@@ -53,6 +53,18 @@ export class User extends ValueObject<UserProps> {
 
   get updated_at() {
     return this.props.updated_at;
+  }
+
+  set first_name(value: string) {
+    this.props.first_name = value;
+  }
+
+  set last_name(value: string) {
+    this.props.last_name = value;
+  }
+
+  set phone_number(value: string) {
+    this.props.phone_number = value;
   }
 
   clear_password() {

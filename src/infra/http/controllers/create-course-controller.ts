@@ -4,7 +4,6 @@ import { z } from "zod";
 import { InvalidParametersError } from "@/core/errors/invalid-parameters";
 
 const courseSchema = z.object({
-  instructor_id: z.string(),
   course_name: z.string(),
   description: z.string(),
 })
@@ -15,7 +14,10 @@ export class CreateCourseController {
 
     try {
       const sut = makeCreateCourseUseCase();
-      const course = sut.execute(data);
+      const course = sut.execute({
+        instructor_id: req.user.sub,
+        ...data
+      });
 
       return reply.status(201).send(course);
     } catch (err) {
