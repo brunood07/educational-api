@@ -1,4 +1,5 @@
 import { UsersRepository } from "@/domain/educational/application/repositories/users-repository";
+import { EditProfileUseCaseRequest } from "@/domain/educational/application/use-cases/edit-profile";
 import { Instructor } from "@/domain/educational/enterprise/entities/instructor";
 import { Student } from "@/domain/educational/enterprise/entities/student";
 import { User } from "@/domain/educational/enterprise/entities/value-objects/user";
@@ -29,7 +30,7 @@ export class InMemoryUsersRepository implements UsersRepository {
   async findById(id: string): Promise<User | null> {
     const user = this.items.find(item => item.id === id)
     if (!user) return null
-    
+
     return user;
   }
 
@@ -73,5 +74,17 @@ export class InMemoryUsersRepository implements UsersRepository {
       password: user.password,
       updated_at: new Date()
     });
+  }
+
+  async update(data: EditProfileUseCaseRequest): Promise<User> {
+    const userIndex = this.items.findIndex(item => item.id === data.id)
+
+    const user = this.items[userIndex];
+
+    if (data.first_name) user.first_name = data.first_name;
+    if (data.last_name) user.last_name = data.last_name;
+    if (data.phone_number) user.phone_number = data.phone_number;
+
+    return user;
   }
 }
