@@ -3,11 +3,13 @@ import { RegisterInstructorController } from "../controllers/register-instructor
 import { RegisterStudentController } from "../controllers/register-student-controller";
 import { GetProfileByIdController } from "../controllers/get-profile-by-id-controller";
 import { verifyJWT } from "./middlewares/verify-jwt";
+import { EditProfileController } from "../controllers/edit-profile-controller";
 
 export async function usersRoutes(app: FastifyInstance) {
   const registerInstructor = new RegisterInstructorController();
   const registerStudent = new RegisterStudentController();
   const getProfile = new GetProfileByIdController();
+  const editProfile = new EditProfileController();
 
   app.post('/instructors', {
     schema: {
@@ -93,4 +95,27 @@ export async function usersRoutes(app: FastifyInstance) {
       },
     }
   }, getProfile.handle);
+  app.put('/edit', {
+    onRequest: [verifyJWT],
+    schema: {
+      description: 'Edit Profile',
+      tags: ['Users'],
+      summary: 'Edit user profile',
+      response: {
+        200: {
+          description: 'Successful response',
+          type: 'object',
+          properties: {
+            first_name: { type: 'string' },
+            last_name: { type: 'string' },
+            phone_number: { type: 'string' },
+          }
+        },
+        400: {
+          description: 'User not found',
+          type: 'string',
+        }
+      },
+    }
+  }, editProfile.handle)
 }

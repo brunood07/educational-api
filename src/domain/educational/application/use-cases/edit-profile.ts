@@ -1,7 +1,6 @@
 import { UserNotFoundError } from "@/core/errors/user-not-found";
 import { User } from "../../enterprise/entities/value-objects/user";
 import { UsersRepository } from "../repositories/users-repository";
-import { prisma } from "@/infra/database/prisma";
 
 export interface EditProfileUseCaseRequest {
   id: string;

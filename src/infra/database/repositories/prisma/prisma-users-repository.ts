@@ -4,6 +4,7 @@ import { User } from "@/domain/educational/enterprise/entities/value-objects/use
 import { prisma } from "@/infra/database/prisma";
 import { PrismaStudentMapper } from "../../mappers/prisma-student-mapper";
 import { Instructor } from "@/domain/educational/enterprise/entities/instructor";
+import { EditProfileUseCaseRequest } from "@/domain/educational/application/use-cases/edit-profile";
 
 export class PrismaUsersRepository implements UsersRepository {
   async create(data: Student | Instructor): Promise<void> {
@@ -79,6 +80,28 @@ export class PrismaUsersRepository implements UsersRepository {
       role: user.role,
       password: user.password,
       updated_at: user.updated_at
+    });
+  }
+
+  async update(data: EditProfileUseCaseRequest): Promise<User> {
+    const update = await prisma.user.update({
+      where: {
+        id: data.id
+      },
+      data
+    })
+
+    return User.create({
+      id: update.id,
+      created_at: update.created_at,
+      document: update.document,
+      email: update.email,
+      first_name: update.first_name,
+      last_name: update.last_name,
+      phone_number: update.phone_number,
+      role: update.role,
+      password: update.password,
+      updated_at: update.updated_at
     });
   }
 }
